@@ -18,10 +18,25 @@ array2.college  = "Sahyadri"
 
 let returnReceived = restOperator(array2);
 function restOperator(...a){
-    console.log(a);
+    // console.log(a);
 }
 
 const array3 = [...array2, 'babith']; // copy elements of array2 along with new element
 const array4 = [array2, 'babith']; //creates seperate 2 elements
 // console.log(array3);
 // console.log(array4);
+
+//---------------------------------------------------------------------
+
+const fetchData = callback =>{
+    setTimeout(() => {
+        callback('Done');
+    }, 2000);
+}
+
+setTimeout(()=>{
+    console.log('Timer is done');
+    fetchData(text=>{
+        console.log(text);
+    })
+}, 2500);

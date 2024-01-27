@@ -28,15 +28,40 @@ const array4 = [array2, 'babith']; //creates seperate 2 elements
 
 //---------------------------------------------------------------------
 
-const fetchData = callback =>{
-    setTimeout(() => {
-        callback('Done');
-    }, 2000);
+//callback
+// const fetchData = callback =>{
+//     setTimeout(() => {
+//         callback('Done');
+//     }, 2000);
+// }
+
+// setTimeout(()=>{
+//     console.log('Timer is done');
+//     fetchData(text=>{
+//         console.log(text);
+//     })
+// }, 2500);
+
+//----------------------------------------------------------------
+
+const fetchDataAsync = async ()=>{
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            resolve('Done');
+        }, 2000)
+    })
 }
 
-setTimeout(()=>{
+//while using await the code wont move next until the promise is resolved
+const main = async()=>{
+    let a = await new Promise((resolve) => setTimeout(resolve, 0));
+    console.log(a);
+
     console.log('Timer is done');
-    fetchData(text=>{
-        console.log(text);
-    })
-}, 2500);
+
+    const result = await fetchDataAsync();
+
+    console.log(result, 'result');
+}
+
+main();

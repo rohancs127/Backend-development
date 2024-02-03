@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
-
+const userRouter = require('./router/user');
 //routing
+app.use('/api/users', userRouter);
+
 //app  level routing - dumping everything into single page
 
 //for both users and allusers
@@ -56,10 +58,23 @@ app.get('/user/:id', middleWare, (req, res)=>{
 200 - success */
 
 
-/* Middleware*/
+/* Middleware
+built in
+app level*/
 
- //express.json()
+//app level middleware
+ app.use(express.json()); //express.json()
+ app.post('/form', (req, res)=>{
+    let body = req.body;
+    res.json({...body});
+ })
 
+ //middleware which checks whether an api is called
+ const logger = function(req, res, next){
+    console.log('new api called');
+    next();
+ }
+ app.use(logger)
 //module level - modularizing
 
 app.listen(3000, ()=>{

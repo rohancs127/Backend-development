@@ -6,8 +6,8 @@ app.use(express.json());
 
 const port = 3000;
 
-app.get('/', ()=>{
-    resizeBy.send('get is working fine');
+app.get('/', (req,res)=>{
+    res.send('get is working fine');
 });
 
 app.post('/api/blogs/insert', async(req, res)=>{

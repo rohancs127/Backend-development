@@ -54,9 +54,21 @@ app.post('/api/blogs/insert', async(req, res)=>{
         console.error('Error fetching Notes', error);
         res.status(500).json({error: 'Internal server error'});
     }
-})
+});
 
-// app.put()
+app.put('api/blogs/updateOne/:id', async(req, res)=>{
+    try {
+        let updated;
+        if(req.body){
+            let authorId= req.params.id;
+            updated = await Note.findByIdAndUpdate({authorId}, req.body);
+            res.json(updated);
+        }
+    } catch (error) {
+        console.error('error happened');
+        res.status(500).json({error:"Internal server error"})
+    }
+})
 
 // app.delete
 

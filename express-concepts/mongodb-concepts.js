@@ -20,20 +20,47 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongoose connection error'));
 db.once('open', ()=>{
     console.log('MongoDB connection successfully established..');
+});
+
+const noteSchema = new mongoose.Schema({
+    id: String,
+    blogTitle: String,
+    blogContent: String,
+    authorld: String
 })
 
-app.get('/', (req,res)=>{
-    res.send('get is working fine');
+app.get('/getAllBlogs', async(req,res)=>{
+    // res.send('get is working fine');
+    try {
+        const notes = await Note.find();
+        res.json(notes);
+    } catch (error) {
+        console.error('error fetching data',error );
+        res.status(500).json({error: 'Internal server error'})
+    }
 });
 
 app.post('/api/blogs/insert', async(req, res)=>{
-    await res.send('post is working fine')
+    // await res.send('post is working fine')
+    try {
+        const {id, blogTitle, blogContent, authorId} = req.body;
+        let saved;
+        if (req.body){
+            const newNote = new Note({id, blogTitle, blogContent, authorId});
+            saved = await newNote.save();
+        }
+        res.send(saved);
+    } catch (error) {
+        console.error('Error fetching Notes', error);
+        res.status(500).json({error: 'Internal server error'});
+    }
 })
 
-app.put()
+// app.put()
 
-app.delete
+// app.delete
 
 app.listen(port, ()=>{
     console.log(('Server started at port:'+ port+'...'));
 })
+

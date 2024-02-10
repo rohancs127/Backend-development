@@ -70,7 +70,19 @@ app.put('api/blogs/updateOne/:id', async(req, res)=>{
     }
 })
 
-// app.delete
+app.delete('/api/blogs/deleteOne', async (req, res) => {
+    try {
+        let deleted;
+        if (req.body) {
+            deleted=await Note.deleteOne(req.body);
+            console.log(deleted);
+        }
+      res.json(deleted);
+    } catch (error) {
+      console.error('Error fetching notes:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 app.listen(port, ()=>{
     console.log(('Server started at port:'+ port+'...'));
